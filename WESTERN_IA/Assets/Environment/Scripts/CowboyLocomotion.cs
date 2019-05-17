@@ -14,6 +14,11 @@ public class CowboyLocomotion : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        Target = GameObject.FindGameObjectWithTag("Player");
+    }
+
     void Update()
     {
         if (Target != null)
