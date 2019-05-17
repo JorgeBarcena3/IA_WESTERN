@@ -5,7 +5,9 @@ using UnityEngine.AI;
 
 public class CowboyLocomotion : MonoBehaviour
 {
+    [HideInInspector]
     public GameObject Target;
+
     private NavMeshAgent _navAgent;
 
     void Awake()
@@ -16,24 +18,26 @@ public class CowboyLocomotion : MonoBehaviour
 
     private void Start()
     {
-        Target = GameObject.FindGameObjectWithTag("Player");
     }
+
 
     void Update()
     {
         if (Target != null)
         {
-            if (!_navAgent.hasPath)
-            {
-                MoveTo(Target.transform);
-            }
+            MoveTo(Target.transform);
         }
+    }
+
+    public void setSpeed(int _speed) {
+        _navAgent.speed = _speed;
     }
 
     public void MoveTo(Transform target)
     {
+        _navAgent.speed *= 2;
         _navAgent.destination = target.position;
         _navAgent.gameObject.transform.LookAt(_navAgent.destination);
-        
+
     }
 }

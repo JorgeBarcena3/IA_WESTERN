@@ -63,6 +63,7 @@
     <Compile Include="Assets\Environment\Scripts\CoverSearch.cs" />
     <Compile Include="Assets\Environment\Scripts\CowboyDecider.cs" />
     <Compile Include="Assets\Environment\Scripts\CowboyLocomotion.cs" />
+    <Compile Include="Assets\Environment\Scripts\CowboyPlanificator.cs" />
     <Compile Include="Assets\Environment\Scripts\DebugCover.cs" />
     <Compile Include="Assets\Environment\Scripts\PCLocomotion.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

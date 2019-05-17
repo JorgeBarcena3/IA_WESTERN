@@ -695,6 +695,46 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114445403184177296, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687576754380904, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: atacante
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687576754380904, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: conservador
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687576754380904, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: asustadizo_personas
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: atacante
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: conservador
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: asustadizo_personas
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: speed
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c, type: 3}
 --- !u!4 &314157186 stripped
@@ -2652,6 +2692,46 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114445403184177296, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: speed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687576754380904, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: conservador
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687576754380904, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: atacante
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687576754380904, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: asustadizo_personas
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: atacante
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: conservador
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: asustadizo_personas
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: speed
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c, type: 3}
 --- !u!4 &1126446479 stripped
@@ -3318,7 +3398,7 @@ GameObject:
   - component: {fileID: 1485020104}
   m_Layer: 0
   m_Name: Covers
-  m_TagString: Untagged
+  m_TagString: cover_search
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3434,6 +3514,46 @@ PrefabInstance:
     - target: {fileID: 4466930557896618, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c, type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114445403184177296, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: speed
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687576754380904, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: atacante
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687576754380904, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: conservador
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687576754380904, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: asustadizo_personas
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: atacante
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: conservador
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: asustadizo_personas
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051355395687628851, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c,
+        type: 3}
+      propertyPath: speed
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6c6fa1a741f1e344a3c3a23c5ffcd5c, type: 3}
