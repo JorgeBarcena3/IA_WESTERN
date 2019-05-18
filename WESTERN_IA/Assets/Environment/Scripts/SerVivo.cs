@@ -83,6 +83,13 @@ public abstract class SerVivo : MonoBehaviour
     {
         current_weapon = _weapon;
     }
+    /// <summary>
+    /// recive daño
+    /// </summary>
+    /// <param name="damage">daño de la bala</param>
+    public void TakeDamage(float damage) {
+        current_life -= (int)damage;
+    }
 
 
 }

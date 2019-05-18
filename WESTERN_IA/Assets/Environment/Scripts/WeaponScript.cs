@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
 {
-    [HideInInspector]
-    //poseedor del arma
-    public Transform owner_transform;
     //El weapon search al que pertenece
     [HideInInspector]
     public WeaponSearch weapon_search;
-    [HideInInspector]
     //instancia de la bala
     public GameObject bullet;
     //distancias maximas
@@ -35,7 +31,7 @@ public class WeaponScript : MonoBehaviour
     #region firing rates
     private const float FIRING_RATE_FAST = 0.3f;
     private const float FIRING_RATE_MID = 0.7f;
-    private const float FIRING_RATE_SLOW = 10;//es tan larga la espera porque es para el arma que solo tiene una bala en el cargador
+    private const float FIRING_RATE_SLOW = 2;//es tan larga la espera porque es para el arma que solo tiene una bala en el cargador
     #endregion
     //los daños que van a provocar las distintas armas
     #region damages
@@ -63,6 +59,12 @@ public class WeaponScript : MonoBehaviour
     private int max_bullets;
     //balas que le quedan a esa arma
     private int current_bullets;
+    //balas que tiene actualmente en el cargador
+    private int current_bullets_in_loader;
+    //el tiempo que lleva recarghando
+    private float current_reload_time;
+    //tiempo que lleva de cadencia entre bala y bala
+    private float current_firing_rate;
 
     //Tipos de arma que hay
     public enum list_kind_weapon { Sniper, Rifle, Gun };
@@ -77,7 +79,6 @@ public class WeaponScript : MonoBehaviour
     void Start()
     {
         weapon_search = GameObject.Find("Weapons").GetComponent<WeaponSearch>();
-        owner_transform = GetComponentInParent<Transform>();
         if (kind_weapon == list_kind_weapon.Sniper)
         {
             GetComponent<MeshRenderer>().material.color = Color.red;
@@ -112,25 +113,51 @@ public class WeaponScript : MonoBehaviour
         }
 
         object_padre = null;
-        //Swich_visibility();
+        current_bullets_in_loader = loader_size;
+        current_firing_rate = 0;
+        current_reload_time = 0;
+        Swich_visibility();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (current_firing_rate > 0)
+            current_firing_rate -= Time.deltaTime;
 
+        if (current_reload_time > 0) {
+            current_reload_time -= Time.deltaTime;
+            if (current_reload_time <= 0)
+                current_bullets_in_loader = loader_size;
+        }
     }
     public void Shoot()
     {
+        BulletScript current_bullet_script;
+        if (current_bullets_in_loader > 0 && current_firing_rate <= 0 && max_bullets > 0)
+        {
+            current_bullets_in_loader--;
+            current_bullet_script = Instantiate(bullet, GetComponentInParent<Transform>().position + new Vector3(0,2,0), GetComponentInParent<Transform>().rotation).GetComponent<BulletScript>();
+            current_bullet_script.SetDamage(damage);
+            current_bullet_script.SetDistance(fire_distance);
+            current_firing_rate = firing_rate;
+            max_bullets--;
+
+        }
+        else if (current_bullets_in_loader <= 0) {
+            Reload();
+        }
+        
+
 
     }
     public void Reload()
     {
+        if (current_bullets_in_loader < loader_size)
+            current_reload_time = reload_time;
 
-    }
-    public void Throw()
-    {
+
 
     }
     /// <summary>
@@ -138,7 +165,7 @@ public class WeaponScript : MonoBehaviour
     /// </summary>
     private void Swich_visibility()
     {
-        if (owner_transform != null)
+        if (object_padre != null)
         {
             GetComponent<MeshRenderer>().enabled = false;
         }
@@ -162,6 +189,7 @@ public class WeaponScript : MonoBehaviour
                 transform.SetParent(other.GetComponent<Transform>());
                 myObj.setWeapon(this.gameObject);
                 weapon_search.weapons.Remove(this.gameObject);
+                Swich_visibility();
             }
 
         }

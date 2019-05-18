@@ -35,6 +35,9 @@ public class PCLocomotion : SerVivo
             current_life -= 10;
             life_UI.text = "Puntos de vida: " + current_life.ToString();
         }
+        if (Input.GetKeyDown(KeyCode.Mouse0) && GetComponent<SerVivo>().current_weapon != null) {
+            GetComponent<SerVivo>().current_weapon.GetComponent<WeaponScript>().Shoot();
+        }
 
 
     }
