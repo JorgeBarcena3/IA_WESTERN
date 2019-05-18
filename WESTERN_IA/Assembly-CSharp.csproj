@@ -66,7 +66,9 @@
     <Compile Include="Assets\Environment\Scripts\CowboyPlanificator.cs" />
     <Compile Include="Assets\Environment\Scripts\DebugCover.cs" />
     <Compile Include="Assets\Environment\Scripts\PCLocomotion.cs" />
+    <Compile Include="Assets\Environment\Scripts\SerVivo.cs" />
     <Compile Include="Assets\Environment\Scripts\WeaponScript.cs" />
+    <Compile Include="Assets\Environment\Scripts\WeaponSearch.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/GitHub/IA_WESTERN/WESTERN_IA/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

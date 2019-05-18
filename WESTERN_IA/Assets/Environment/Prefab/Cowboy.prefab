@@ -71,6 +71,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 511e1ad97f0294b44b4c8b91544926f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  root_element: {fileID: 1111899110652344}
+  MAX_LIFE: 100
+  current_life: 0
+  weapon_search: {fileID: 0}
+  current_weapon: {fileID: 0}
   atacante: 0
   conservador: 0
   asustadizo_personas: 0

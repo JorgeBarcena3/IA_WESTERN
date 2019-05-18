@@ -12,7 +12,7 @@ public enum Goals : byte
     change_zone = 4
 }
 
-public class CowboyPlanificator : MonoBehaviour
+public class CowboyPlanificator : SerVivo
 {
 
     [Space(10)]
@@ -26,7 +26,7 @@ public class CowboyPlanificator : MonoBehaviour
     [Header("Variables fisicas")]
     [Range(1, 7)]
     public int walk_speed = 3;
-
+    
     private CowboyDecider my_pawn;
 
     [HideInInspector]
@@ -36,8 +36,11 @@ public class CowboyPlanificator : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        //Start del padre
+        base.Start();
+
         //Buscamos y asignamos el controlador de la locomocion
         my_movement = GetComponentInChildren<CowboyLocomotion>();
         my_movement.setSpeed(walk_speed);
@@ -49,13 +52,19 @@ public class CowboyPlanificator : MonoBehaviour
         //Asignamos el controlador de zonas de covertura
         coveredZones = GameObject.FindObjectOfType<CoverSearch>();
 
+
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         //Segun los objetivos impuestos por este controlador decide donde ir
         my_pawn.Decide();
-        
+
+        //Update del padre
+        base.Update();
+
     }
+
+
 }

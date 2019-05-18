@@ -44,7 +44,7 @@ public class WeaponScript : MonoBehaviour
     #region max byllets
     private const float MAX_BULLETS_BIG = 100;
     private const float MAX_BULLETS_MID = 60;
-    private const float MAX_BULLETS_SMALL = 30;  
+    private const float MAX_BULLETS_SMALL = 30;
     #endregion
     //distancia maxima a la que se puede disparar
     private float fire_distance;
@@ -62,10 +62,14 @@ public class WeaponScript : MonoBehaviour
     private float current_bullets;
 
     //Tipos de arma que hay
-    public enum list_kind_weapon { Sniper, Rifle , Gun};
-    [HideInInspector]
+    public enum list_kind_weapon { Sniper, Rifle, Gun };
     //el arma que es este en cuestion, se elige desde el editor
     public list_kind_weapon kind_weapon;
+
+    //Objeto que guarda una referencia al padre si existe
+    [HideInInspector]
+    public GameObject object_padre;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -92,7 +96,8 @@ public class WeaponScript : MonoBehaviour
             max_bullets = MAX_BULLETS_MID;
         }
 
-        else if (kind_weapon == list_kind_weapon.Gun) {
+        else if (kind_weapon == list_kind_weapon.Gun)
+        {
             GetComponent<MeshRenderer>().material.color = Color.blue;
             fire_distance = FIRE_DISTANCE_SHORT;
             loader_size = LOADER_SIZE_BIG;
@@ -102,33 +107,34 @@ public class WeaponScript : MonoBehaviour
             max_bullets = MAX_BULLETS_BIG;
         }
 
+        object_padre = null;
         //Swich_visibility();
-
-
-
-
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-    public void Shoot() {
 
     }
-    public void Reload() {
+    public void Shoot()
+    {
 
     }
-    public void Throw() {
+    public void Reload()
+    {
+
+    }
+    public void Throw()
+    {
 
     }
     /// <summary>
     /// Cambia la visibilidad del objeto dependiendo de si es poseido o está en el suelo
     /// </summary>
-    private void Swich_visibility() {
-        if (owner_transform != null )
+    private void Swich_visibility()
+    {
+        if (owner_transform != null)
         {
             GetComponent<MeshRenderer>().enabled = false;
         }
@@ -140,9 +146,24 @@ public class WeaponScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Mind" || other.gameObject.name == "Body") {
+        if (other.gameObject.name == "Mind" || other.gameObject.name == "Body")
+        {
+            object_padre = other.gameObject;
             transform.SetParent(other.GetComponent<Transform>());
+            other.gameObject.GetComponent<SerVivo>().setWeapon(this.gameObject);
 
         }
     }
+
+    public void Covered()
+    {
+        GetComponent<MeshRenderer>().material.color = Color.green;
+    }
+
+    public void NoCovered()
+    {
+        GetComponent<MeshRenderer>().material.color = Color.red;
+    }
+
+
 }
