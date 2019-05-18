@@ -10,7 +10,7 @@ public class CowboyLocomotion : MonoBehaviour
 
     private NavMeshAgent _navAgent;
 
- 
+
     void Awake()
     {
         _navAgent = GetComponentInParent<NavMeshAgent>();
@@ -24,11 +24,12 @@ public class CowboyLocomotion : MonoBehaviour
 
     void Update()
     {
-        
+
 
         if (Target != null)
         {
-            MoveTo(Target.transform);
+            if (!_navAgent.hasPath)
+                MoveTo(Target.transform);
         }
     }
 

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class WeaponSearch : MonoBehaviour
 {
-
-    private GameObject[] weapons;
+    [HideInInspector]
+    public List<GameObject> weapons;
 
     [HideInInspector]
     public List<GameObject> weapons_covered;
     [HideInInspector]
     public List<GameObject> weapons_no_covered;
-    [HideInInspector]
+
     public float LifeTime = 2.0f;
     [HideInInspector]
     private float _lastUpdate = 0.0f;
@@ -21,10 +21,9 @@ public class WeaponSearch : MonoBehaviour
     void Start()
     {
         var coversGO = GetComponentsInChildren<WeaponScript>();
-        weapons = new GameObject[coversGO.Length];
         for (var i = 0; i < coversGO.Length; i++)
         {
-            weapons[i] = coversGO[i].gameObject;
+            weapons.Add(coversGO[i].gameObject);
         }
 
         Player = GameObject.FindGameObjectWithTag("Player");
@@ -47,6 +46,8 @@ public class WeaponSearch : MonoBehaviour
                 var hits = Physics.RaycastAll(Player.transform.position, (weapon.transform.position - Player.transform.position),
                     50, LayerMask.GetMask("Covers"));
 
+                Debug.DrawRay(Player.transform.position, (weapon.transform.position - Player.transform.position), Color.green, LifeTime, true);
+
                 var hitCount = hits.Length;
                 if (hitCount == 0)
                 {
@@ -62,5 +63,5 @@ public class WeaponSearch : MonoBehaviour
             }
         }
     }
-   
+
 }

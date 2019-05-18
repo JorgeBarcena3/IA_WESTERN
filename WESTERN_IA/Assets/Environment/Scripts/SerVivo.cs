@@ -22,9 +22,18 @@ public abstract class SerVivo : MonoBehaviour
     [HideInInspector]
     public GameObject current_weapon;
 
+    //Guarda una referencia al player
+    protected PCLocomotion player_controller_scr;
+    protected GameObject player_controller_obj;
+
     // Start is called before the first frame update
-    public virtual void Start()
+    public virtual void Awake()
     {
+
+        //Asignamos el PCLocomotion
+        player_controller_obj = GameObject.FindGameObjectWithTag("Player");
+        player_controller_scr = player_controller_obj.GetComponentInChildren<PCLocomotion>();
+
         //Asignamos la vida maxima
         current_life = MAX_LIFE;
 
@@ -61,6 +70,7 @@ public abstract class SerVivo : MonoBehaviour
         {
 
             WeaponScript weapon_scr = current_weapon.GetComponentInChildren<WeaponScript>();
+            weapon_scr.weapon_search.weapons.Add(current_weapon);
             current_weapon.transform.SetParent(weapon_search_obj.transform);
             weapon_scr.object_padre = null;
             current_weapon = null;
@@ -69,7 +79,8 @@ public abstract class SerVivo : MonoBehaviour
 
     }
 
-    public void setWeapon(GameObject _weapon) {
+    public void setWeapon(GameObject _weapon)
+    {
         current_weapon = _weapon;
     }
 

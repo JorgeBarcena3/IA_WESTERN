@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebugCover : MonoBehaviour {
+public class DebugCover : MonoBehaviour
+{
 
     public void Start()
     {
@@ -22,4 +24,5 @@ public class DebugCover : MonoBehaviour {
     {
         GetComponent<MeshRenderer>().material.color = Color.gray;
     }
+    
 }

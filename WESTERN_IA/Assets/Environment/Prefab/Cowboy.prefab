@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 114445403184177296}
   - component: {fileID: 114687576754380904}
   - component: {fileID: 1051355395687628851}
+  - component: {fileID: 5738801849304667750}
+  - component: {fileID: 404357732438378941}
   m_Layer: 0
   m_Name: Mind
   m_TagString: Untagged
@@ -46,7 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
-  speed: 0
 --- !u!114 &114687576754380904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,14 +76,47 @@ MonoBehaviour:
   root_element: {fileID: 1111899110652344}
   MAX_LIFE: 100
   current_life: 0
-  weapon_search: {fileID: 0}
+  weapon_search_obj: {fileID: 0}
+  weapon_search_script: {fileID: 0}
   current_weapon: {fileID: 0}
-  atacante: 0
-  conservador: 0
-  asustadizo_personas: 0
+  my_behaivour:
+    atacante: 0
+    conservador: 0
+    asustadizo_personas: 0
   walk_speed: 3
   my_movement: {fileID: 0}
   coveredZones: {fileID: 0}
+  LifeTime: 2
+--- !u!54 &5738801849304667750
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078512046875008}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &404357732438378941
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078512046875008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5001177
+  m_Height: 2.0506077
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.825294, z: -0.00016790628}
 --- !u!1 &1111899110652344
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,8 +183,6 @@ GameObject:
   - component: {fileID: 4289664894507352}
   - component: {fileID: 33370596169901890}
   - component: {fileID: 23161963188916916}
-  - component: {fileID: 136081764764344840}
-  - component: {fileID: 3848205258602317450}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -217,33 +249,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &136081764764344840
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1493215188599634}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &3848205258602317450
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1493215188599634}
-  serializedVersion: 2
-  m_Mass: 0.0000001
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

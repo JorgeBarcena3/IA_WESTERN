@@ -13,12 +13,8 @@ public class PCLocomotion : SerVivo
 
 
     // Use this for initialization
-    public override void Start()
+    public void Start()
     {
-
-        //Start del padre
-        base.Start();
-
         life_UI.text = "Puntos de vida: " + current_life.ToString();
     }
 
@@ -51,6 +47,7 @@ public class PCLocomotion : SerVivo
         {
 
             WeaponScript weapon_scr = current_weapon.GetComponentInChildren<WeaponScript>();
+            weapon_scr.weapon_search.weapons.Add(current_weapon);
             current_weapon.transform.SetParent(weapon_search_obj.transform);
             weapon_scr.object_padre = null;
             current_weapon = null;

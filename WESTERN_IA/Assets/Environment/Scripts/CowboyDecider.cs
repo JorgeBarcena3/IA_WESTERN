@@ -41,6 +41,8 @@ public class CowboyDecider : MonoBehaviour
                 {
                     parent_planificator.changeGoal();
                 }
+
+
             }
         }
         //En Caso de que el objetivo sea ir a una zona de cobertura
@@ -55,22 +57,38 @@ public class CowboyDecider : MonoBehaviour
                 parent_planificator.my_movement.Target = bestOpc;
             }
             else
-            if (!parent_planificator.weapon_search_script.weapons_no_covered.Contains(target_zone))
+            if (!parent_planificator.weapon_search_script.weapons.Contains(target_zone) || !parent_planificator.weapon_search_script.weapons_no_covered.Contains(target_zone))
             {
                 if (parent_planificator.weapon_search_script.weapons_no_covered.Count > 0)
                 {
                     //Tengo que valorar cual es la posicion mejor segun unos costes
-                    GameObject bestOpc = checkBestOptionToGo(parent_planificator.coveredZones.NoCovered);
+                    GameObject bestOpc = checkBestOptionToGo(parent_planificator.weapon_search_script.weapons_no_covered);
                     target_zone = bestOpc;
                     parent_planificator.my_movement.Target = bestOpc;
                 }
-                else {
+                else
+                {
                     parent_planificator.changeGoal();
                 }
+
+
             }
+
+
+            checkIfIsGoal();
+
         }
 
 
+    }
+
+    private void checkIfIsGoal()
+    {
+        if (target_zone != null)
+        {
+            if (Vector3.Distance(this.transform.position, target_zone.transform.position) < 2)
+                parent_planificator.changeGoal();
+        }
     }
 
     GameObject checkBestOptionToGo(List<GameObject> options)
@@ -104,11 +122,22 @@ public class CowboyDecider : MonoBehaviour
 
     private int getCostToGo(GameObject obj)
     {
+        if (my_goal == Goals.change_zone)
+        {
+            int distanciaProteccion = Convert.ToInt32(Vector3.Distance(parent_planificator.coveredZones.Player.transform.position, obj.transform.position));
+            int distanciaPlayer = Convert.ToInt32(Vector3.Distance(this.transform.position, parent_planificator.coveredZones.Player.transform.position));
+            int cost = (distanciaProteccion * parent_planificator.my_behaivour.conservador) - (distanciaProteccion * parent_planificator.my_behaivour.atacante) + (distanciaPlayer * parent_planificator.my_behaivour.asustadizo_personas);
+            return cost;
+        }
+        else if (my_goal == Goals.get_weapon)
+        {
+            int distanciaProteccion = Convert.ToInt32(Vector3.Distance(parent_planificator.coveredZones.Player.transform.position, obj.transform.position));
+            int distanciaPlayer = Convert.ToInt32(Vector3.Distance(this.transform.position, parent_planificator.coveredZones.Player.transform.position));
+            int cost = (distanciaProteccion * parent_planificator.my_behaivour.conservador) - (distanciaProteccion * parent_planificator.my_behaivour.atacante) + (distanciaPlayer * parent_planificator.my_behaivour.asustadizo_personas);
+            return cost;
+        }
 
-        int distanciaProteccion = Convert.ToInt32(Vector3.Distance(this.transform.position, obj.transform.position));
-        int distanciaPlayer = Convert.ToInt32(Vector3.Distance(this.transform.position, parent_planificator.coveredZones.Player.transform.position));
-        int cost = (distanciaProteccion * parent_planificator.conservador) - (distanciaProteccion * parent_planificator.atacante) + (distanciaPlayer * parent_planificator.asustadizo_personas);
-        return cost;
+        return 0;
     }
 
 
