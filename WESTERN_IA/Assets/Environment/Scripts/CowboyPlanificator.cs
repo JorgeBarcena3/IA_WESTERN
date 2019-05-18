@@ -24,8 +24,8 @@ public class CowboyPlanificator : SerVivo
 
     [Space(10)]
     [Header("Variables fisicas")]
-    [Range(1, 7)]
-    public int walk_speed = 3;
+    [Range(1, 5)]
+    public float walk_speed = 3;
     
     private CowboyDecider my_pawn;
 
@@ -58,13 +58,21 @@ public class CowboyPlanificator : SerVivo
     // Update is called once per frame
     public override void Update()
     {
-        //Segun los objetivos impuestos por este controlador decide donde ir
-        my_pawn.Decide();
 
         //Update del padre
         base.Update();
 
+        //Seleccionamos la meta para el enemigo
+        setGoal();
+
+        //Segun los objetivos impuestos por este controlador decide donde ir
+        my_pawn.Decide();
+ 
+
     }
 
-
+    private void setGoal()
+    {
+        throw new NotImplementedException();
+    }
 }

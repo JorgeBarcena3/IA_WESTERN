@@ -107,3 +107,4 @@ MonoBehaviour:
   owner_transform: {fileID: 0}
   bullet: {fileID: 0}
   kind_weapon: 2
+  object_padre: {fileID: 0}

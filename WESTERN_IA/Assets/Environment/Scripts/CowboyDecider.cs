@@ -6,7 +6,7 @@ using UnityEngine;
 public class CowboyDecider : MonoBehaviour
 {
 
-    private GameObject coveredZone;
+    private GameObject target_zone;
     private CowboyPlanificator parent_planificator;
 
     [HideInInspector]
@@ -24,18 +24,48 @@ public class CowboyDecider : MonoBehaviour
             {
                 //Tengo que valorar cual es la posicion opcion segun los costes
                 GameObject bestOpc = checkBestOptionToGo(parent_planificator.coveredZones.NoCovered);
-                coveredZone = bestOpc;
+                target_zone = bestOpc;
                 parent_planificator.my_movement.Target = bestOpc;
             }
-
-            if (!parent_planificator.coveredZones.NoCovered.Contains(coveredZone))
+            else
+            if (!parent_planificator.coveredZones.NoCovered.Contains(target_zone))
             {
                 if (parent_planificator.coveredZones.NoCovered.Count > 0)
                 {
                     //Tengo que valorar cual es la posicion mejor segun unos costes
                     GameObject bestOpc = checkBestOptionToGo(parent_planificator.coveredZones.NoCovered);
-                    coveredZone = bestOpc;
+                    target_zone = bestOpc;
                     parent_planificator.my_movement.Target = bestOpc;
+                }
+                else
+                {
+                    parent_planificator.changeGoal();
+                }
+            }
+        }
+        //En Caso de que el objetivo sea ir a una zona de cobertura
+        else if (my_goal == Goals.get_weapon)
+        {
+            //Primera opcion
+            if (parent_planificator.my_movement.Target == null)
+            {
+                //Tengo que valorar cual es la posicion opcion segun los costes
+                GameObject bestOpc = checkBestOptionToGo(parent_planificator.weapon_search_script.weapons_no_covered);
+                target_zone = bestOpc;
+                parent_planificator.my_movement.Target = bestOpc;
+            }
+            else
+            if (!parent_planificator.weapon_search_script.weapons_no_covered.Contains(target_zone))
+            {
+                if (parent_planificator.weapon_search_script.weapons_no_covered.Count > 0)
+                {
+                    //Tengo que valorar cual es la posicion mejor segun unos costes
+                    GameObject bestOpc = checkBestOptionToGo(parent_planificator.coveredZones.NoCovered);
+                    target_zone = bestOpc;
+                    parent_planificator.my_movement.Target = bestOpc;
+                }
+                else {
+                    parent_planificator.changeGoal();
                 }
             }
         }
@@ -84,14 +114,14 @@ public class CowboyDecider : MonoBehaviour
 
     private void Start()
     {
-      
+
         parent_planificator = GetComponent<CowboyPlanificator>();
 
     }
 
     public void Update()
     {
-      
+
     }
 
 

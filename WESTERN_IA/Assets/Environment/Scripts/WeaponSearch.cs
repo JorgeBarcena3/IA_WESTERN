@@ -42,21 +42,21 @@ public class WeaponSearch : MonoBehaviour
         {
             weapons_covered = new List<GameObject>();
             weapons_no_covered = new List<GameObject>();
-            foreach (GameObject cover in weapons)
+            foreach (GameObject weapon in weapons)
             {
-                var hits = Physics.RaycastAll(Player.transform.position, (cover.transform.position - Player.transform.position),
+                var hits = Physics.RaycastAll(Player.transform.position, (weapon.transform.position - Player.transform.position),
                     50, LayerMask.GetMask("Covers"));
 
                 var hitCount = hits.Length;
                 if (hitCount == 0)
                 {
-                    weapons_covered.Add(cover);
-                    cover.GetComponent<WeaponScript>().Covered();
+                    weapons_covered.Add(weapon);
+                    weapon.GetComponent<WeaponScript>().Covered();
                 }
                 else
                 {
-                    weapons_no_covered.Add(cover);
-                    cover.GetComponent<WeaponScript>().NoCovered();
+                    weapons_no_covered.Add(weapon);
+                    weapon.GetComponent<WeaponScript>().NoCovered();
                 }
 
             }

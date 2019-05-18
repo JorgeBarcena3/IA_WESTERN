@@ -14,7 +14,9 @@ public abstract class SerVivo : MonoBehaviour
 
     //Weapon search gameobject
     [HideInInspector]
-    public GameObject weapon_search;
+    public GameObject weapon_search_obj;
+    [HideInInspector]
+    public WeaponSearch weapon_search_script;
 
     //Guarda una referencia a la arma que contiene
     [HideInInspector]
@@ -27,7 +29,8 @@ public abstract class SerVivo : MonoBehaviour
         current_life = MAX_LIFE;
 
         //Asignamos el controlador de armas
-        weapon_search = GameObject.Find("Weapons");
+        weapon_search_obj = GameObject.Find("Weapons");
+        weapon_search_script = weapon_search_obj.GetComponent<WeaponSearch>();
 
         //No hay arma inicial
         current_weapon = null;
@@ -50,15 +53,15 @@ public abstract class SerVivo : MonoBehaviour
     public virtual void lifeIs0()
     {
 
-        Debug.Log("Life is 0 from parent");
-
         if (current_weapon == null)
+        {
             Destroy(root_element);
+        }
         else
         {
 
             WeaponScript weapon_scr = current_weapon.GetComponentInChildren<WeaponScript>();
-            current_weapon.transform.SetParent(weapon_search.transform);
+            current_weapon.transform.SetParent(weapon_search_obj.transform);
             weapon_scr.object_padre = null;
             current_weapon = null;
 

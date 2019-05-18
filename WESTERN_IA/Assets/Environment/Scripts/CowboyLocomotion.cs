@@ -10,6 +10,7 @@ public class CowboyLocomotion : MonoBehaviour
 
     private NavMeshAgent _navAgent;
 
+ 
     void Awake()
     {
         _navAgent = GetComponentInParent<NavMeshAgent>();
@@ -23,19 +24,21 @@ public class CowboyLocomotion : MonoBehaviour
 
     void Update()
     {
+        
+
         if (Target != null)
         {
             MoveTo(Target.transform);
         }
     }
 
-    public void setSpeed(int _speed) {
+    public void setSpeed(float _speed)
+    {
         _navAgent.speed = _speed;
     }
 
     public void MoveTo(Transform target)
     {
-        _navAgent.speed *= 2;
         _navAgent.destination = target.position;
         _navAgent.gameObject.transform.LookAt(_navAgent.destination);
 
