@@ -29,7 +29,7 @@ public class WeaponScript : MonoBehaviour
     #endregion
     //cadencia de disparo de cada arma
     #region firing rates
-    private const float FIRING_RATE_FAST = 0.3f;
+    private const float FIRING_RATE_FAST = 1f;
     private const float FIRING_RATE_MID = 0.7f;
     private const float FIRING_RATE_SLOW = 2;//es tan larga la espera porque es para el arma que solo tiene una bala en el cargador
     #endregion
@@ -79,6 +79,7 @@ public class WeaponScript : MonoBehaviour
     void Start()
     {
         weapon_search = GameObject.Find("Weapons").GetComponent<WeaponSearch>();
+
         if (kind_weapon == list_kind_weapon.Sniper)
         {
             GetComponent<MeshRenderer>().material.color = Color.red;
@@ -126,32 +127,62 @@ public class WeaponScript : MonoBehaviour
         if (current_firing_rate > 0)
             current_firing_rate -= Time.deltaTime;
 
-        if (current_reload_time > 0) {
+        if (current_reload_time > 0)
+        {
             current_reload_time -= Time.deltaTime;
             if (current_reload_time <= 0)
                 current_bullets_in_loader = loader_size;
         }
+
+
     }
+
     public void Shoot()
     {
         BulletScript current_bullet_script;
+
         if (current_bullets_in_loader > 0 && current_firing_rate <= 0 && max_bullets > 0)
         {
+            this.transform.rotation = object_padre.transform.rotation;
             current_bullets_in_loader--;
-            current_bullet_script = Instantiate(bullet, GetComponentInParent<Transform>().position + new Vector3(0,2,0), GetComponentInParent<Transform>().rotation).GetComponent<BulletScript>();
+            current_bullet_script = Instantiate(bullet, GetComponentInParent<Transform>().position + new Vector3(0, 2, 0), this.transform.rotation).GetComponent<BulletScript>();
             current_bullet_script.SetDamage(damage);
             current_bullet_script.SetDistance(fire_distance);
             current_firing_rate = firing_rate;
             max_bullets--;
 
         }
-        else if (current_bullets_in_loader <= 0) {
+        else if (current_bullets_in_loader <= 0)
+        {
             Reload();
         }
-        
-
-
+               
     }
+
+    public void Shoot(Vector3 finalPos)
+    {
+        BulletScript current_bullet_script;
+
+        if (current_bullets_in_loader > 0 && current_firing_rate <= 0 && max_bullets > 0)
+        {
+       
+            this.transform.rotation = object_padre.transform.rotation;
+            current_bullets_in_loader--;
+            current_bullet_script = Instantiate(bullet, GetComponentInParent<Transform>().position + new Vector3(0, 2, 0), this.transform.rotation).GetComponent<BulletScript>();
+            current_bullet_script.SetDamage(damage);
+            current_bullet_script.SetDistance(fire_distance);
+            current_firing_rate = firing_rate;
+            max_bullets--;
+
+        }
+        else if (current_bullets_in_loader <= 0)
+        {
+            Reload();
+        }
+               
+    }
+
+
     public void Reload()
     {
         if (current_bullets_in_loader < loader_size)
@@ -177,7 +208,7 @@ public class WeaponScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-       
+
         SerVivo myObj = other.gameObject.GetComponent<SerVivo>();
 
         if (myObj != null)
@@ -188,6 +219,7 @@ public class WeaponScript : MonoBehaviour
                 object_padre = other.gameObject;
                 transform.SetParent(other.GetComponent<Transform>());
                 myObj.setWeapon(this.gameObject);
+                myObj.current_weapon_scr = this.gameObject.GetComponent<WeaponScript>();
                 weapon_search.weapons.Remove(this.gameObject);
                 Swich_visibility();
             }
@@ -206,6 +238,7 @@ public class WeaponScript : MonoBehaviour
     }
 
     public int getCurrentBullets() { return current_bullets; }
+    public int getMaxBullet() { return max_bullets; }
 
 
 

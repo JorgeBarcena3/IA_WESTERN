@@ -46,6 +46,9 @@ public class CowboyPlanificator : SerVivo
     [HideInInspector]
     private float _lastUpdate = 0.0f;
 
+    [HideInInspector]
+    public bool i_am_in_zone = false;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -122,10 +125,39 @@ public class CowboyPlanificator : SerVivo
             cost_action.Add(cost_get_weapon);
 
             //DISPARAR DESDE LA ZONA
-            cost_action.Add(int.MaxValue);
+            //SI ESTOY EN LAZONA Y TENGO ARMA CON BALAS Y CARGADOR -- Atacante (* conservador)
+            int cost_shoot_from_zone;
+            if (i_am_in_zone && current_weapon != null && current_weapon_scr.getMaxBullet() > 0 && !coveredZones.NoCovered.Contains(my_pawn.target_zone))
+            {
+                cost_shoot_from_zone = 50 * my_behaivour.conservador;
+                cost_action.Add(cost_shoot_from_zone);
+            }
+            else
+                cost_action.Add(int.MaxValue);
+
 
             //ATACAR POR LA ESPALDA
-            cost_action.Add(int.MaxValue);
+            int cost_attack;
+            if (current_weapon != null && current_weapon_scr.getMaxBullet() > 0)
+            {
+                Vector3 dirFromAtoB = (coveredZones.Player.transform.position - transform.position).normalized;
+                float dotProd = Vector3.Dot(dirFromAtoB, transform.forward);
+
+                if (dotProd > 0)
+                {
+                    // ObjA is looking mostly towards ObjB
+                    cost_action.Add(int.MaxValue);
+
+                }
+                else
+                {
+                    cost_attack = 0;
+                    cost_action.Add(cost_attack);
+                }
+
+            }
+            else
+                cost_action.Add(int.MaxValue);
 
 
             //IR A ZONA DE COBERTURA
@@ -149,7 +181,7 @@ public class CowboyPlanificator : SerVivo
                          50, LayerMask.GetMask("Covers"));
             if (hits.Length > 0)
                 cost_go_cover += 100; //100 == Coste de no tener linea 
-            
+
             cost_go_cover *= my_behaivour.conservador;
             cost_action.Add(cost_go_cover);
 

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class CowboyDecider : MonoBehaviour
 {
-
-    private GameObject target_zone;
+    [HideInInspector]
+    public GameObject target_zone;
     private CowboyPlanificator parent_planificator;
 
     [HideInInspector]
@@ -36,18 +36,24 @@ public class CowboyDecider : MonoBehaviour
                     GameObject bestOpc = checkBestOptionToGo(parent_planificator.coveredZones.NoCovered);
                     target_zone = bestOpc;
                     parent_planificator.my_movement.Target = bestOpc;
+
                 }
                 else
                 {
                     parent_planificator.changeGoal();
                 }
 
-
             }
+
+            checkIfIsInZone();
+
         }
         //En Caso de que el objetivo sea ir a una zona de cobertura
         else if (my_goal == Goals.get_weapon)
         {
+            //Ya no esta en la zona
+            parent_planificator.i_am_in_zone = false;
+
             //Primera opcion
             if (parent_planificator.my_movement.Target == null)
             {
@@ -78,6 +84,25 @@ public class CowboyDecider : MonoBehaviour
             checkIfIsGoal();
 
         }
+        //Si tengo una arma y estoy en una zona
+        else if (my_goal == Goals.shot_from_zone)
+        {
+
+            if (parent_planificator.current_weapon != null)
+            {
+                transform.LookAt(parent_planificator.coveredZones.Player.transform);
+                parent_planificator.current_weapon_scr.Shoot(parent_planificator.coveredZones.Player.transform.position);
+            }
+
+        }
+        //Si tengo un arma y el jugador no me esta mirando
+        else if (my_goal == Goals.attack)
+        {
+
+            transform.LookAt(parent_planificator.coveredZones.Player.transform);
+            transform.position = Vector3.MoveTowards(transform.position, parent_planificator.coveredZones.Player.transform.position, 0.3f);
+
+        }
 
 
     }
@@ -88,6 +113,19 @@ public class CowboyDecider : MonoBehaviour
         {
             if (Vector3.Distance(this.transform.position, target_zone.transform.position) < 2)
                 parent_planificator.changeGoal();
+        }
+    }
+
+    private void checkIfIsInZone()
+    {
+        if (target_zone != null)
+        {
+            if (Vector3.Distance(this.transform.position, target_zone.transform.position) < 2)
+            {
+                parent_planificator.i_am_in_zone = true;
+                parent_planificator.changeGoal();
+
+            }
         }
     }
 
@@ -127,6 +165,7 @@ public class CowboyDecider : MonoBehaviour
             int distanciaProteccion = Convert.ToInt32(Vector3.Distance(parent_planificator.coveredZones.Player.transform.position, obj.transform.position));
             int distanciaPlayer = Convert.ToInt32(Vector3.Distance(this.transform.position, parent_planificator.coveredZones.Player.transform.position));
             int cost = (distanciaProteccion * parent_planificator.my_behaivour.conservador) - (distanciaProteccion * parent_planificator.my_behaivour.atacante) + (distanciaPlayer * parent_planificator.my_behaivour.asustadizo_personas);
+            //       int cost = distanciaProteccion;
             return cost;
         }
         else if (my_goal == Goals.get_weapon)
@@ -134,6 +173,7 @@ public class CowboyDecider : MonoBehaviour
             int distanciaProteccion = Convert.ToInt32(Vector3.Distance(parent_planificator.coveredZones.Player.transform.position, obj.transform.position));
             int distanciaPlayer = Convert.ToInt32(Vector3.Distance(this.transform.position, parent_planificator.coveredZones.Player.transform.position));
             int cost = (distanciaProteccion * parent_planificator.my_behaivour.conservador) - (distanciaProteccion * parent_planificator.my_behaivour.atacante) + (distanciaPlayer * parent_planificator.my_behaivour.asustadizo_personas);
+            //            int cost = distanciaProteccion;
             return cost;
         }
 

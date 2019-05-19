@@ -21,6 +21,8 @@ public abstract class SerVivo : MonoBehaviour
     //Guarda una referencia a la arma que contiene
     [HideInInspector]
     public GameObject current_weapon;
+    [HideInInspector]
+    public WeaponScript current_weapon_scr;
 
     //Guarda una referencia al player
     protected PCLocomotion player_controller_scr;
@@ -43,6 +45,7 @@ public abstract class SerVivo : MonoBehaviour
 
         //No hay arma inicial
         current_weapon = null;
+        current_weapon_scr = null;
 
     }
 
@@ -74,6 +77,7 @@ public abstract class SerVivo : MonoBehaviour
             current_weapon.transform.SetParent(weapon_search_obj.transform);
             weapon_scr.object_padre = null;
             current_weapon = null;
+            current_weapon_scr = null;
 
         }
 

@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945a855b630f909489b8641b177bd2b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target_zone: {fileID: 0}
   my_goal: 0
 --- !u!114 &1051355395687628851
 MonoBehaviour:
@@ -79,6 +80,7 @@ MonoBehaviour:
   weapon_search_obj: {fileID: 0}
   weapon_search_script: {fileID: 0}
   current_weapon: {fileID: 0}
+  current_weapon_scr: {fileID: 0}
   my_behaivour:
     atacante: 0
     conservador: 0
@@ -87,6 +89,7 @@ MonoBehaviour:
   my_movement: {fileID: 0}
   coveredZones: {fileID: 0}
   LifeTime: 2
+  i_am_in_zone: 0
 --- !u!54 &5738801849304667750
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,7 +132,7 @@ GameObject:
   - component: {fileID: 195055576012678332}
   m_Layer: 0
   m_Name: Cowboy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

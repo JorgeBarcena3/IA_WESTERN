@@ -46,7 +46,7 @@ public class CoverSearch : MonoBehaviour
                     Covered.Add(cover);
                     cover.GetComponent<DebugCover>().Covered();
                 }
-                else
+                else //EL JUGADOR NO LO VE
                 {
                     NoCovered.Add(cover);
                     cover.GetComponent<DebugCover>().NoCovered();

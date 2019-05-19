@@ -28,8 +28,8 @@ public class CowboyLocomotion : MonoBehaviour
 
         if (Target != null)
         {
-            if (!_navAgent.hasPath)
-                MoveTo(Target.transform);
+
+            MoveTo(Target.transform);
         }
     }
 
