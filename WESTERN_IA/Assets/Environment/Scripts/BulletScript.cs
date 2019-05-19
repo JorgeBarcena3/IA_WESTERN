@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     //velocidad de la bala
-    private const float SPEED = 100;
+    private const float SPEED = 30;
     //distancia maxima que alcanza
     private float max_distance;
     //daño que aplica la bala

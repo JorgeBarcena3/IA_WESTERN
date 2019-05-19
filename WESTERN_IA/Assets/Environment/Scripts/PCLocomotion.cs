@@ -38,6 +38,17 @@ public class PCLocomotion : SerVivo
         if (Input.GetKeyDown(KeyCode.Mouse0) && GetComponent<SerVivo>().current_weapon != null) {
             GetComponent<SerVivo>().current_weapon.GetComponent<WeaponScript>().Shoot();
         }
+        if (Input.GetKeyDown(KeyCode.R)) {
+            GetComponent<SerVivo>().current_weapon.GetComponent<WeaponScript>().Reload();
+        }
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            //agacharse
+            this.gameObject.transform.parent.transform.localScale = new Vector3(1, 0.5f, 1);
+        }
+        else {
+            this.gameObject.transform.parent.transform.localScale = new Vector3(1, 1, 1);
+        }
 
 
     }

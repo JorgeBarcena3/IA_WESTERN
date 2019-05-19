@@ -145,7 +145,7 @@ public class WeaponScript : MonoBehaviour
         {
             this.transform.rotation = object_padre.transform.rotation;
             current_bullets_in_loader--;
-            current_bullet_script = Instantiate(bullet, GetComponentInParent<Transform>().position + new Vector3(0, 2, 0), this.transform.rotation).GetComponent<BulletScript>();
+            current_bullet_script = Instantiate(bullet, GetComponentInParent<Transform>().position + new Vector3(0, 1, 0), this.transform.rotation).GetComponent<BulletScript>();
             current_bullet_script.SetDamage(damage);
             current_bullet_script.SetDistance(fire_distance);
             current_firing_rate = firing_rate;
