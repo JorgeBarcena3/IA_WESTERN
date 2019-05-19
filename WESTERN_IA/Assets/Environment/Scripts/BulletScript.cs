@@ -17,6 +17,7 @@ public class BulletScript : MonoBehaviour
     void Start()
     {
         current_distance = 0;
+        GetComponent<SphereCollider>().enabled = false;
         
     }
 
@@ -31,6 +32,10 @@ public class BulletScript : MonoBehaviour
         else
         {
             DestroyBullet();
+        }
+        if (current_distance > 20) {
+            GetComponent<SphereCollider>().enabled = true;
+
         }
        
         

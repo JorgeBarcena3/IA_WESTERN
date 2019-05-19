@@ -99,7 +99,7 @@ public class WeaponScript : MonoBehaviour
             reload_time = RELOAD_TIME_SLOW;
             firing_rate = FIRING_RATE_MID;
             damage = DAMAGE_MID;
-            max_bullets = current_bullets = MAX_BULLETS_SMALL;
+            max_bullets = current_bullets = MAX_BULLETS_MID;
         }
 
         else if (kind_weapon == list_kind_weapon.Gun)
@@ -110,7 +110,7 @@ public class WeaponScript : MonoBehaviour
             reload_time = RELOAD_TIME_FAST;
             firing_rate = FIRING_RATE_FAST;
             damage = DAMAGE_WEAK;
-            max_bullets = current_bullets = MAX_BULLETS_SMALL;
+            max_bullets = current_bullets = MAX_BULLETS_BIG;
         }
 
         object_padre = null;
@@ -127,11 +127,21 @@ public class WeaponScript : MonoBehaviour
         if (current_firing_rate > 0)
             current_firing_rate -= Time.deltaTime;
 
-        if (current_reload_time > 0)
+        if (current_reload_time > 0 && current_bullets > 0)
         {
             current_reload_time -= Time.deltaTime;
             if (current_reload_time <= 0)
-                current_bullets_in_loader = loader_size;
+                if (current_bullets < loader_size)
+                {
+                    current_bullets_in_loader = current_bullets;
+                    current_bullets = 0;
+                }
+                else {
+                    current_bullets -= loader_size - current_bullets_in_loader;
+                    current_bullets_in_loader = loader_size;
+                    
+                }
+                
         }
 
 
@@ -141,7 +151,7 @@ public class WeaponScript : MonoBehaviour
     {
         BulletScript current_bullet_script;
 
-        if (current_bullets_in_loader > 0 && current_firing_rate <= 0 && max_bullets > 0)
+        if (current_bullets_in_loader > 0 && current_firing_rate <= 0)
         {
             this.transform.rotation = object_padre.transform.rotation;
             current_bullets_in_loader--;
@@ -149,7 +159,6 @@ public class WeaponScript : MonoBehaviour
             current_bullet_script.SetDamage(damage);
             current_bullet_script.SetDistance(fire_distance);
             current_firing_rate = firing_rate;
-            max_bullets--;
 
         }
         else if (current_bullets_in_loader <= 0)
@@ -239,6 +248,13 @@ public class WeaponScript : MonoBehaviour
 
     public int getCurrentBullets() { return current_bullets; }
     public int getMaxBullet() { return max_bullets; }
+
+    public int GetLoader() { return loader_size; }
+    public int GetCurrentLoader() { return current_bullets_in_loader; }
+    public float GetReloadTime() { return reload_time; }
+    public float GetCurrentReloadTime() { return current_reload_time; }
+    public float GetRate() { return firing_rate; }
+    public float GetCurrentRate() { return current_firing_rate;  }
 
 
 

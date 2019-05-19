@@ -10,6 +10,7 @@ public class PCLocomotion : SerVivo
     public Vector3 respawn_zone;
     //Texto de la vida
     public Text life_UI;
+    public GameObject weapon_UI;
 
 
     // Use this for initialization
@@ -35,7 +36,7 @@ public class PCLocomotion : SerVivo
             current_life -= 10;
             life_UI.text = "Puntos de vida: " + current_life.ToString();
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0) && GetComponent<SerVivo>().current_weapon != null) {
+        if (Input.GetKey(KeyCode.Mouse0) && GetComponent<SerVivo>().current_weapon != null) {
             GetComponent<SerVivo>().current_weapon.GetComponent<WeaponScript>().Shoot();
         }
         if (Input.GetKeyDown(KeyCode.R)) {
@@ -49,6 +50,8 @@ public class PCLocomotion : SerVivo
         else {
             this.gameObject.transform.parent.transform.localScale = new Vector3(1, 1, 1);
         }
+
+        weapon_UI.GetComponent<UIWeaponScript>().HaveWeapon(current_weapon);
 
 
     }
