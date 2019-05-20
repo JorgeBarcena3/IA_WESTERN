@@ -21,6 +21,8 @@ public class UIWeaponScript : MonoBehaviour
     public GameObject rate_UI;
     //referencia a la barra de carga de recarga
     public GameObject reload_UI;
+    //mira del arma
+    public GameObject weapon_look_UI;
     //referencia de las balas del cargador
     private Image [] balas_UI;
     //referencia de las balas totales
@@ -38,8 +40,9 @@ public class UIWeaponScript : MonoBehaviour
         sniper_loader_UI.SetActive(false);
         rate_UI.SetActive(false);
         reload_UI.SetActive(false);
+        weapon_look_UI.SetActive(false);
 
-        
+
     }
 
    //esta funcion se la llama desde el update del jugador
@@ -48,6 +51,7 @@ public class UIWeaponScript : MonoBehaviour
         if (weapon != null)
         {
             current_max_bullet_panel_UI.SetActive(true);
+            weapon_look_UI.SetActive(true);
             current_max_bullet_UI.text = weapon.GetComponent<WeaponScript>().getCurrentBullets().ToString();
             loader_UI.SetActive(true);
             balas_total_UI = current_max_bullet_panel_UI.GetComponentsInChildren<Image>();
@@ -123,6 +127,7 @@ public class UIWeaponScript : MonoBehaviour
             gun_loader_UI.SetActive(false);
             rifle_loader_UI.SetActive(false);
             sniper_loader_UI.SetActive(false);
+            weapon_look_UI.SetActive(false);
 
         }
     }

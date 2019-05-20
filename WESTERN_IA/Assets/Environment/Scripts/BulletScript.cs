@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,31 +13,36 @@ public class BulletScript : MonoBehaviour
     private float damage;
     //distancia recorrida actual de la bala
     private float current_distance;
+    private SphereCollider my_sphere_collider;
 
     // Start is called before the first frame update
     void Start()
     {
         current_distance = 0;
-        GetComponent<SphereCollider>().enabled = false;
-        
+        my_sphere_collider = GetComponent<SphereCollider>();
+        my_sphere_collider.enabled = false;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         //si la bala no ha superado la distancia maxima se mueve en el eje forward, sino se destrulle
         if (current_distance < max_distance) {
-            current_distance = SPEED * Time.deltaTime;
-            transform.position += transform.forward * current_distance;
+            current_distance += SPEED * Time.deltaTime;
+            transform.position += transform.forward * SPEED * Time.deltaTime;
         }
         else
         {
             DestroyBullet();
         }
-        if (current_distance > 20) {
-            GetComponent<SphereCollider>().enabled = true;
+        if (current_distance > 1) {
+            my_sphere_collider.enabled = true;
 
         }
+        
        
         
     }
