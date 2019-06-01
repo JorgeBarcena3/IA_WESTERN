@@ -65,6 +65,8 @@ public class WeaponScript : MonoBehaviour
     private float current_reload_time;
     //tiempo que lleva de cadencia entre bala y bala
     private float current_firing_rate;
+    //indica si en ese momento se esta recargando
+    private bool itsreloding = false;
 
     //Tipos de arma que hay
     public enum list_kind_weapon { Sniper, Rifle, Gun };
@@ -88,7 +90,7 @@ public class WeaponScript : MonoBehaviour
             reload_time = RELOAD_TIME_MID;
             firing_rate = FIRING_RATE_SLOW;
             damage = DAMAGE_STRONG;
-            max_bullets = current_bullets = MAX_BULLETS_SMALL;
+            max_bullets = MAX_BULLETS_SMALL;
         }
 
         else if (kind_weapon == list_kind_weapon.Rifle)
@@ -99,7 +101,7 @@ public class WeaponScript : MonoBehaviour
             reload_time = RELOAD_TIME_SLOW;
             firing_rate = FIRING_RATE_MID;
             damage = DAMAGE_MID;
-            max_bullets = current_bullets = MAX_BULLETS_MID;
+            max_bullets = MAX_BULLETS_MID;
         }
 
         else if (kind_weapon == list_kind_weapon.Gun)
@@ -110,11 +112,23 @@ public class WeaponScript : MonoBehaviour
             reload_time = RELOAD_TIME_FAST;
             firing_rate = FIRING_RATE_FAST;
             damage = DAMAGE_WEAK;
-            max_bullets = current_bullets = MAX_BULLETS_BIG;
+            max_bullets = MAX_BULLETS_BIG;
         }
 
         object_padre = null;
-        current_bullets_in_loader = loader_size;
+        if (max_bullets < loader_size)
+        {
+            current_bullets_in_loader = max_bullets;
+            current_bullets = 0;
+        }
+        else
+        {
+            current_bullets_in_loader = loader_size;
+            current_bullets = max_bullets - loader_size;
+
+        }
+
+        
         current_firing_rate = 0;
         current_reload_time = 0;
         Swich_visibility();
@@ -131,6 +145,7 @@ public class WeaponScript : MonoBehaviour
         {
             current_reload_time -= Time.deltaTime;
             if (current_reload_time <= 0)
+            {
                 if (current_bullets < loader_size)
                 {
                     current_bullets_in_loader = current_bullets;
@@ -141,6 +156,10 @@ public class WeaponScript : MonoBehaviour
                     current_bullets_in_loader = loader_size;
                     
                 }
+                itsreloding = false;
+            }
+
+               
                 
         }
 
@@ -194,8 +213,13 @@ public class WeaponScript : MonoBehaviour
 
     public void Reload()
     {
-        if (current_bullets_in_loader < loader_size)
+        if (current_bullets_in_loader < loader_size && !itsreloding)
+        {
             current_reload_time = reload_time;
+            itsreloding = true;
+
+        }
+            
 
 
 

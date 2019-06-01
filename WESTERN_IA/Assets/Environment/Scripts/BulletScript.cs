@@ -65,7 +65,6 @@ public class BulletScript : MonoBehaviour
     /// </summary>
     /// <param name="objetive"></param>
     public void MakeDamage(SerVivo objetive) {
-
         objetive.TakeDamage(damage);
 
     }
@@ -75,8 +74,15 @@ public class BulletScript : MonoBehaviour
     /// <param name="other">el colisionador con el que choca</param>
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.GetComponent<SerVivo>())
+        if (other.gameObject.GetComponent<SerVivo>())
             MakeDamage(other.gameObject.GetComponent<SerVivo>());
+        DestroyBullet();
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<SerVivo>())
+            MakeDamage(collision.gameObject.GetComponent<SerVivo>());
         DestroyBullet();
 
     }

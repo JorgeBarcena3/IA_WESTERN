@@ -15,9 +15,9 @@ public enum Goals : byte
 [System.Serializable]
 public struct behaivour
 {
-    public int atacante;
-    public int conservador;
-    public int asustadizo_personas;
+    public float atacante;
+    public float conservador;
+    public float asustadizo_personas;
 }
 
 public class CowboyPlanificator : SerVivo
@@ -67,6 +67,10 @@ public class CowboyPlanificator : SerVivo
 
         //Seleccionamos la meta para el enemigo
         setGoal(10, true);
+        float total = my_behaivour.asustadizo_personas + my_behaivour.atacante + my_behaivour.conservador;
+        my_behaivour.asustadizo_personas = my_behaivour.asustadizo_personas / total;
+        my_behaivour.atacante = my_behaivour.atacante / total;
+        my_behaivour.conservador = my_behaivour.conservador / total;
 
 
     }
@@ -99,25 +103,27 @@ public class CowboyPlanificator : SerVivo
                 _lastUpdate = timestamp;
 
 
-            List<int> cost_action = new List<int>();
+            List<float> cost_action = new List<float>();
 
             //CONSEGUIR UN ARMA
             //VAMOS A TENER EN CUENTA TRES PARAMETROS PARA IR A POR EL ARMA
             //LA VIDA DEL JUGADOR -- CUANTA MENOS VIDA, MAS PRIORITARIO -- ATACANTE
             //SI NO TENGO BALAS -- MAS PRIORITARIO -- ATACANTE
             //SI NO TENGO WEAPON -- MAS PRIORITARIO -- ATACANTE
-            int cost_get_weapon = player_controller_scr.current_life;
+            float cost_get_weapon = player_controller_scr.current_life;
             if (current_weapon != null)
             {
-                if (current_weapon.GetComponent<WeaponScript>().getCurrentBullets() > 0)
+                if (current_weapon.GetComponent<WeaponScript>().getCurrentBullets() + current_weapon.GetComponent<WeaponScript>().GetCurrentLoader() > 0)
                 {
-                    cost_get_weapon = 500; //Si tengo balas no es necesario que vaya a por otro arma
+                    cost_get_weapon = 1; //Si tengo balas no es necesario que vaya a por otro arma
                 }
-                else
-                {
-                    cost_get_weapon += 100; // 300 == coste de tener arma
+                else {
+                    cost_get_weapon = 0;
                 }
-
+               
+            }
+            else {
+                cost_get_weapon = 0; 
             }
 
 
@@ -126,14 +132,14 @@ public class CowboyPlanificator : SerVivo
 
             //DISPARAR DESDE LA ZONA
             //SI ESTOY EN LAZONA Y TENGO ARMA CON BALAS Y CARGADOR -- Atacante (* conservador)
-            int cost_shoot_from_zone;
-            if (i_am_in_zone && current_weapon != null && current_weapon_scr.getMaxBullet() > 0 && !coveredZones.NoCovered.Contains(my_pawn.target_zone))
+            float cost_shoot_from_zone;
+            if (i_am_in_zone && current_weapon != null && current_weapon_scr.getMaxBullet() > 0 && coveredZones.NoCovered.Contains(my_pawn.target_zone))
             {
-                cost_shoot_from_zone = 50 * my_behaivour.conservador;
+                cost_shoot_from_zone = 0 * my_behaivour.conservador;
                 cost_action.Add(cost_shoot_from_zone);
             }
             else
-                cost_action.Add(int.MaxValue);
+                cost_action.Add(1);
 
 
             //ATACAR POR LA ESPALDA
@@ -146,18 +152,18 @@ public class CowboyPlanificator : SerVivo
                 if (dotProd > 0)
                 {
                     // ObjA is looking mostly towards ObjB
-                    cost_action.Add(int.MaxValue);
+                    cost_action.Add(1);
 
                 }
                 else
                 {
-                    cost_attack = 0;
+                    cost_attack = 1;
                     cost_action.Add(cost_attack);
                 }
 
             }
             else
-                cost_action.Add(int.MaxValue);
+                cost_action.Add(1);
 
 
             //IR A ZONA DE COBERTURA
@@ -165,27 +171,27 @@ public class CowboyPlanificator : SerVivo
             //HAY LINEA DIRECTA CON EL JUGADOR -- MAS PRIORITARIO
             //TENGO POCA VIDA -- MAS PRIORITARIO
             //TENGO ARMA Y BALAS -- MAS PRIORITARIO
-            int cost_go_cover = current_life;
+            float cost_go_cover = current_life/MAX_LIFE;
             if (current_weapon != null)
             {
                 if (current_weapon.GetComponent<WeaponScript>().getCurrentBullets() > 0)
                 {
-                    cost_go_cover += 50; //Si tengo balas no es necesario que vaya a por otro arma
+                    cost_go_cover = 0.2f; //Si tengo balas no es necesario que vaya a por otro arma
                 }
                 else
                 {
-                    cost_go_cover += 50; // 300 == coste de tener arma
+                    cost_go_cover = 0.5f; // 300 == coste de tener arma
                 }
             }
             var hits = Physics.RaycastAll(player_controller_obj.transform.position, (this.transform.position - player_controller_obj.transform.position),
                          50, LayerMask.GetMask("Covers"));
             if (hits.Length > 0)
-                cost_go_cover += 100; //100 == Coste de no tener linea 
+                cost_go_cover += 0.2f; //100 == Coste de no tener linea 
 
             cost_go_cover *= my_behaivour.conservador;
             cost_action.Add(cost_go_cover);
 
-            int cost = int.MaxValue;
+            float cost = 1;
             byte index = 0;
 
             //DETECTAR MINIMO COSTE Y APLICARLO

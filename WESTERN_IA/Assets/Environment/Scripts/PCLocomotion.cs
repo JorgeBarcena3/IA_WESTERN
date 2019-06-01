@@ -33,6 +33,7 @@ public class PCLocomotion : SerVivo
     {
         //Update del padre
         base.Update();
+        life_UI.text = "Puntos de vida: " + current_life.ToString();
 
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * 10.0f;
         var z = Input.GetAxis("Vertical") * Time.deltaTime * 10.0f;
@@ -43,7 +44,7 @@ public class PCLocomotion : SerVivo
         if (Input.GetKeyDown(KeyCode.G))
         {
             current_life -= 10;
-            life_UI.text = "Puntos de vida: " + current_life.ToString();
+            
         }
         //dispara
         if (Input.GetKey(KeyCode.Mouse0) && GetComponent<SerVivo>().current_weapon != null) {

@@ -132,7 +132,7 @@ public class CowboyDecider : MonoBehaviour
     GameObject checkBestOptionToGo(List<GameObject> options)
     {
 
-        int min_cost;
+        float min_cost;
         GameObject min_position;
 
         if (options.Count > 0)
@@ -144,7 +144,7 @@ public class CowboyDecider : MonoBehaviour
             foreach (GameObject opc in options)
             {
 
-                int current_cost = getCostToGo(opc);
+                float current_cost = getCostToGo(opc);
                 if (current_cost < min_cost)
                 {
                     min_cost = current_cost;
@@ -158,13 +158,13 @@ public class CowboyDecider : MonoBehaviour
 
     }
 
-    private int getCostToGo(GameObject obj)
+    private float getCostToGo(GameObject obj)
     {
         if (my_goal == Goals.change_zone)
         {
             int distanciaProteccion = Convert.ToInt32(Vector3.Distance(parent_planificator.coveredZones.Player.transform.position, obj.transform.position));
             int distanciaPlayer = Convert.ToInt32(Vector3.Distance(this.transform.position, parent_planificator.coveredZones.Player.transform.position));
-            int cost = (distanciaProteccion * parent_planificator.my_behaivour.conservador) - (distanciaProteccion * parent_planificator.my_behaivour.atacante) + (distanciaPlayer * parent_planificator.my_behaivour.asustadizo_personas);
+            float cost = (distanciaProteccion * parent_planificator.my_behaivour.conservador) - (distanciaProteccion * parent_planificator.my_behaivour.atacante) + (distanciaPlayer * parent_planificator.my_behaivour.asustadizo_personas);
             //       int cost = distanciaProteccion;
             return cost;
         }
@@ -172,7 +172,7 @@ public class CowboyDecider : MonoBehaviour
         {
             int distanciaProteccion = Convert.ToInt32(Vector3.Distance(parent_planificator.coveredZones.Player.transform.position, obj.transform.position));
             int distanciaPlayer = Convert.ToInt32(Vector3.Distance(this.transform.position, parent_planificator.coveredZones.Player.transform.position));
-            int cost = (distanciaProteccion * parent_planificator.my_behaivour.conservador) - (distanciaProteccion * parent_planificator.my_behaivour.atacante) + (distanciaPlayer * parent_planificator.my_behaivour.asustadizo_personas);
+            float cost = (distanciaProteccion * parent_planificator.my_behaivour.conservador) - (distanciaProteccion * parent_planificator.my_behaivour.atacante) + (distanciaPlayer * parent_planificator.my_behaivour.asustadizo_personas);
             //            int cost = distanciaProteccion;
             return cost;
         }
